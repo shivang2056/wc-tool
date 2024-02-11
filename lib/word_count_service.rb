@@ -8,6 +8,8 @@ class WordCountService
     case option
     when '-c'
       @file.bytesize.to_s + " #{@file_path}"
+    when '-l'
+      @file.scan(/\n/).size.to_s + " #{@file_path}"
     else
       'Error'
     end

@@ -14,6 +14,8 @@ class WordCountService
       @file.split.size.to_s + " #{@file_path}"
     when '-m'
       @file.size.to_s + " #{@file_path}"
+    when nil
+      "#{@file.scan(/\n/).size} #{@file.split.size} #{@file.bytesize} #{@file_path}"
     else
       'Error'
     end

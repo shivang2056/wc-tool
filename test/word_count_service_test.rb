@@ -13,7 +13,7 @@ class WordCountServiceTest < Minitest::Test
   end
 
   def test_with_option_c
-    assert_equal @service.process('-c'), "342190 #{FILE_PATH}"
+    assert_equal "342190 #{FILE_PATH}", @service.process('-c')
   end
 
   def test_with_option_l

@@ -2,6 +2,6 @@
 
 require_relative "../lib/word_count_service.rb"
 
-path, option = ARGV[0], ARGV[1]
+option, path = ARGV[0], ARGV[1]
 
-puts WordCountService.new(path).process(option)
+puts WordCountService.initiate(path, option)

@@ -1,4 +1,8 @@
+require_relative './word_count_helper'
+
 class WordCountService
+  include WordCountHelper
+
   def initialize(file_path)
     @path = file_path
     @file = read_file(file_path)
@@ -14,20 +18,15 @@ class WordCountService
   end
 
   def process(option = nil)
-    case option
-    when '-c'
-      @file.bytesize.to_s + " #{@path}"
-    when '-l'
-      @file.scan(/\n/).size.to_s + " #{@path}"
-    when '-w'
-      @file.split.size.to_s + " #{@path}"
-    when '-m'
-      @file.size.to_s + " #{@path}"
-    when nil
-      "#{@file.scan(/\n/).size} #{@file.split.size} #{@file.bytesize} #{@path}"
+    if option.nil?
+      data = fetch_with_default
+    elsif invalid_option?(option)
+      raise_invalid_option(option)
     else
-      raise "\nccwc: illegal option -- #{option}\nusage: ccwc [-clmw] [file ...]"
+      data = fetch_with_option(option)
     end
+
+    "#{data} #{@path}"
   end
 
   private
@@ -40,5 +39,9 @@ class WordCountService
     else
       raise "\nccwc: #{path}: open: No such file or directory"
     end
+  end
+
+  def raise_invalid_option(option)
+    raise "\nccwc: illegal option -- #{option}\nusage: ccwc [-clmw] [file ...]"
   end
 end
